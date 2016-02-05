@@ -1,0 +1,313 @@
+body, html 
+{
+    padding: 20px;
+    font: 14px;
+    font-family: Ubuntu, sans-serif;
+    background-color: #f2f2f2;
+}
+
+input 
+{
+    font-family: Ubuntu, sans-serif;
+}
+
+textarea 
+{
+    font-family: Ubuntu, sans-serif;
+    width: 100%;
+    min-height: 300px;
+}
+button 
+{
+	font-family: Ubuntu, sans-serif;
+}
+a 
+{
+  color: #00B7FF;
+}
+
+h4
+{
+	margin-bottom: 5px;
+}
+
+#headernav
+{
+	margin-bottom: 5px;
+}
+
+/*************Page Container stuff***************/
+#content
+{
+	margin: 0px;
+	padding: 0px;
+}
+
+.pageWidth
+{
+	padding-right: 5px;
+	padding-left: 5px;
+	margin: 0px 1%;
+	box-sizing: border-box;
+}
+
+#pageContent
+{
+	background-color: #fcfcff;
+	padding: 10px 20px;
+	box-shadow: 0px 0px 7px #999;
+
+}
+
+
+
+/*************Threads*******************/
+.tt 
+{
+	width: 300px;
+}
+
+.threadTable td
+{
+	padding-right: 30px;
+}
+
+.threadTitle
+{
+
+}
+
+.threadDate
+{
+	display: inline-block;
+	font-size: 12px;
+}
+
+.threadReplies
+{
+	display: inline-block;
+	font-size: 12px;
+
+}
+
+.latestPostDate
+{
+	display: inline-block;
+	font-size: 12px;
+}
+
+
+
+
+/**************************posts (comments)***************************/
+.postcontent
+{
+	/*display: inline-block;*/
+	vertical-align: top;
+	margin-left: 180px;
+	margin-bottom: 15px;
+	word-wrap: break-word;
+
+
+}
+
+.postFooter
+{
+	text-align: right;
+	bottom: 10px;
+	right: 10px;
+	position: relative;
+	margin-left: 180px;
+
+
+}
+.miscDeets
+{
+	font-size: 12px;
+}
+.signature
+{
+	margin-bottom: 10px;
+	margin-left: 180px;
+	border-top: 1px dashed #A5CAE4;
+}
+
+.signature span
+{
+	/*margin-left: 180px;*/
+}
+
+.posts
+{
+	background: #FFFFFF none repeat scroll 0% 0%;
+	border: 1px solid #D7EDFC;
+	padding: 10px;
+	border-radius: 9px;
+	min-height: 200px;
+	margin-top: 20px;
+	position: relative;
+	width: 97%;
+
+}
+
+.userscontent
+{
+	vertical-align: top;
+	margin-right: 180px;
+	margin-bottom: 15px;
+	word-wrap: break-word;
+}
+
+.postbit
+{
+	float: left;
+	width: 150px;
+	height: 200px;
+	background-color: #D7EDFC;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #D7EDFC;
+	border-radius: 5px;
+	position: relative;
+}
+
+.userspostbit
+{
+
+	float: right;
+	width: 150px;
+	height: 200px;
+	background-color: #D7EDFC;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #D7EDFC;
+	border-radius: 5px;
+	position: relative;
+
+}
+
+.sprite
+{
+
+}
+
+.spriteContainer
+{
+	display: flex;
+	align-items: center;
+
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	top: -5px;
+	left: -2px;
+
+}
+
+.sprite img
+{
+/*	left: 1px;
+	top: -4px;*/
+	/*position: absolute;*/
+/*	margin-left: auto;
+	margin-right: auto;
+*/
+	max-width: 32px;
+	max-height: 32px;
+
+}
+
+.textContainer
+{
+	/*margin-left: 32px;*/
+	min-height: 18px;
+	word-wrap: break-word;
+
+}
+
+.avatar
+{
+	display: block;
+	background-color: #F0F7FC;
+
+	padding: 5px 0px 5px 24px;
+
+	border-radius: 4px;
+
+}
+.avatar img 
+{
+	background-color: #FCFCFF;
+	padding: 2px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #A5CAE4;
+	border-radius: 4px;
+
+}
+
+
+.username
+{
+	display: block;
+
+	text-align: center;
+}
+
+.banner
+{
+	display: block;
+	position: absolute;
+	bottom: 5px;
+	left: 0;
+	right: 0;
+	margin: auto;
+
+
+	background: transparent url("/images/form-button-white-25px.png.m.1432972134.png") repeat-x scroll center top;
+
+	padding: 1px 5px;
+	border-radius: 4px;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+	text-align: center;
+
+	margin-left: -6px;
+	margin-right: -6px;
+	font-size: 12px;
+
+} 
+
+.miscData
+{
+	padding-left: 5px;
+	margin-top: 5px;
+	font-size: 12px;
+}
+
+nav
+{
+	padding-bottom: 5px;
+
+}
+
+.updateUserInfo td
+{
+	padding-right: 10px;
+}
+
+
+
+
+
+
+
+.OCAPPAForums md-content {
+  background-color: transparent !important; }
+  .OCAPPAForums md-content md-tabs {
+    background: #f6f6f6;
+    border: 1px solid #e1e1e1; }
+    .OCAPPAForums md-content md-tabs md-tabs-wrapper {
+      background: white; }
+  .OCAPPAForums md-content h1:first-child {
+    margin-top: 0; }
+

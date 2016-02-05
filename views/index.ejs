@@ -1,0 +1,594 @@
+<html ng-app="OCAPPAForums">
+    <head>
+        <title ng-bind="header"></title>
+        <!-- <base href="/"></base> -->
+    </head>
+    <body>
+        <!-- https://thinkster.io/mean-stack-tutorial  -->
+        <header>
+            <div id="headernav">
+                <div class="pageWidth">
+                    <nav ng-controller="NavCtrl">
+                        <span ng-show="isLoggedIn()">| Signed in as <a href="/#/users/{{currentUser()}}"><span ng-bind="currentUser()"></span></a> | </span>
+                        <span ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a> | </span>
+                        <span ng-hide="isLoggedIn()"> | <a href="/#/login">Log In</a></span>
+                        <span ng-hide="isLoggedIn()"> | <a href="/#/register">Register</a> | </span>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="content">
+            <div class="pageWidth">
+                <div id="pageContent">
+                    <ui-view></ui-view>
+                </div>
+            </div>
+        </div>
+        <script type="text/ng-template" id="/forums.html">
+            <div>
+              <h1>OCAPPA Forums</h1>
+            </div>
+            
+            
+            
+            
+            
+            <div ng-repeat="post in threads | orderBy:'-latestPost.date'">
+            
+
+            <table class="threadTable">
+              <tr>
+                <td class="tt">
+                <div class="threadTitle">
+                  <a href="#/forums/threads/{{post._id}}" ng-bind="post.title"></a>
+                </div>
+                <div class="threadDate">
+                  <span ng-show="post.author"><span ng-bind="post.author"></span> at <span ng-bind="post.date"></span></span>     
+                </div>
+                </td>
+                <td>
+                  <div>
+                    Replies
+                  </div>
+                  <div class="threadReplies">
+                    <span ng-bind="post.replies"></span>
+                  </div>
+                </td>
+                <td>
+                  <div class="latestPostUser">
+                    <span ng-bind="post.latestPost.user"></span>
+                  </div>
+                  <div class="latestPostDate">
+                    <span ng-show="post.latestPost">at <span ng-bind="post.latestPost.date"></span></span>
+
+                  </div>
+                   
+                </td>
+              </tr>
+
+            </table>
+
+              
+              
+              
+              
+              <br />
+             
+            
+            
+              <span>
+                
+              </span>
+              <!-- - Likes: {{post.likes}} -->
+            </div>
+            
+            
+            
+            <form ng-submit="addPost()" ng-show="isLoggedIn()"
+                style="margin-top:30px;">
+              <h3>Create New Thread</h3>
+            
+              <p id="author"></p>
+            
+            
+                <input type="text"
+                placeholder="Title"
+                ng-model="title"></input>
+                  <br />
+                  <textarea ng-model="content" cols="40" rows="10"></textarea>
+                  <br />
+             
+                <!-- <input type="text"
+                placeholder="Link"
+                ng-model="link"></input> -->
+            
+              <button type="submit">Create Thread</button>
+            </form>
+            
+            </div>
+            </div>
+            </div>
+            
+            
+        </script>
+
+
+
+
+
+
+
+        <script type="text/ng-template" id="/members.html">
+
+        <a href="/#/forums">Home</a>
+
+          <h3>Profile of user <span ng-bind="post.username"></span></h3>
+   
+
+
+
+
+          <div class="posts">
+            <div class="userspostbit">
+
+              <div class="avatar">
+
+                <img width="96" height="96" ng-src="{{post.misc.avatar}}" />      
+              </div>
+
+              <div class="userText">
+                <a href="/#/users/{{post.username}}"><span class="username" ng-bind="post.username"></span></a>
+                <span class="customtitle"></span>
+                <div class="badges"></div>
+                <span ng-style="{'color' : post.banner.textCol, 'background-color' : post.banner.backgroundCol}" class="banner wrapped" ng-Class="post.username">
+
+
+                  <span class="sprite">
+
+                    <div class="spriteContainer">
+                      <img max-width="32" max-height="32" ng-src="{{post.banner.sprite}}" / >
+                    </div>
+
+                    <div class="textContainer">
+                      <span ng-attr-title="{{post.banner.hover}}" ng-bind="post.banner.text">
+                    </div>
+                  </span>
+
+                  </span>
+
+                </span>
+
+                <div class="miscData">
+                  Posts: <span ng-bind="post.misc.postCount"></span>
+                </div>
+
+              </div>
+            </div>
+
+              <div class="userscontent">
+                <!-- https://github.com/buberdds/angular-bootstrap-colorpicker -->
+
+          <div ng-cloak>
+            <md-content>
+              <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="Info">
+                  <md-content class="md-padding"><span ng-bind="about"></span></md-content>
+                </md-tab>
+                <md-tab label="Edit Profile">
+                  <md-content class="md-padding">
+
+                      <span ng-hide="currentUser() == post.username" ng-bind="permission"></span>
+
+                      <form ng-show="currentUser() == post.username" ng-submit="updateUserInfo(post.username)">
+
+                      <h4>Banner Text</h4>
+                      <input ng-model="bannerText" placeholder="banner text"></input>
+                      <h4>Hover Text</h4>
+                      <input ng-model="hoverText"></input>
+                      <h4>Text Color</h4>
+                      <input colorpicker colorpicker-position="right" ng-model="textCol" placeholder="banner text color"></input>
+                      <h4>Background Color</h4>
+                      <input colorpicker colorpicker-position="right" ng-model="backColor" placeholder="banner background color"></input>
+                      
+                      <h4>Banner Sprite URL http://www.smogon.com/dex/media/sprites/xyicons/_.png</h4>
+                      <input ng-model="sprite"></input> 
+                      <h4>Avatar URL</h4>
+                      <input ng-model="avatar"></input>
+                      <h4>About yourself</h4>
+                      <textarea ng-model="about"></textarea>
+
+
+                      <!-- <table class="updateUserInfo">
+                        <tr>
+                          <td><h4>Banner Text</h4></td>
+                          <td><h4>Text Color</h4></td>
+                          <td><h4>Background Color</h4></td>
+
+                        </tr>
+                        <tr>
+                          <td><input ng-model="bannerText" placeholder="banner text"></input></td>
+                          <td><input colorpicker ng-model="textCol" placeholder="banner text color"></input></td>
+                          <td><input colorpicker ng-model="backColor" placeholder="banner background color"></input></td>
+                        </tr>
+                        <tr>
+                          <td><h4>Hover Text</h4></td>
+                          <td><h4>Banner Sprite URL</h4></td>
+                          <td><h4>Avatar URL</h4></td>
+                        </tr>
+                        <tr>
+                          <td><input ng-model="hoverText"></input></td>
+                          <td><input ng-model="sprite"></input></td> 
+                          <td><input ng-model="avatar"></input></td>
+                        </tr>
+                      </table> -->
+
+                      
+                      
+                      
+                      
+                      
+                      
+
+                      
+                      <br />
+                      <br />
+                      <button type="submit">Save</button>
+                      <br />
+                      Note: images are not hosted here.
+                    </form>
+
+                    
+
+
+
+
+                  </md-content>
+                </md-tab>
+              </md-tabs>
+            </md-content>
+          </div>
+
+
+                
+
+                
+
+
+
+
+
+
+              </div>
+
+
+              </div>
+
+
+
+
+
+
+
+
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <script type="text/ng-template" id="/threads.html">
+            
+ 
+            <p><a href="/#/forums">Home</a></p>
+            
+            <h3 ng-bind="post.title"></h3>
+            <div ng-show="loggedInMatch && !editingTitle && !editing && !amEditingPost">
+                
+              
+              <a href="" ng-click="editTitle()">Edit Thread Title</a>
+            </div>
+            
+            <div ng-show="editingTitle">
+
+            <form ng-submit="updateTitle(post._id)">
+
+              <textarea row="1" ng-model="titleEdit"></textarea>
+
+              <button type="submit">Change</button>
+            </form>
+            </div>
+  <!--  
+//   <div class="op">
+//  <table>
+//     <tr>
+//       <td class="author">{{post.author}}</td>
+//       <td class="postcontent"><span style="white-space: pre;" ng-hide="editing" ng-bind="content"></span>
+        
+//         <span ng-show="editing">
+          
+//           <form ng-submit="updateOP()">
+//             <textarea cols="40" rows="10" ng-model="data.text"></textarea>
+//             <br />
+//             <button type="submit">Post</button>
+//           </form>
+          
+          
+//         </span>
+        
+        
+//       </td>
+//     </tr>
+    
+//   </table> 
+  
+//   <div class="postFooter">
+//     {{post.date}}
+//     <a href="" ng-show="loggedInMatch && !editing" ng-click="editOP()">Edit</a>
+//   </div>
+// </div> -->
+
+      <div class="posts">
+
+        <div class="postbit">
+
+          <div class="avatar">
+
+            <img width="96" height="96" ng-src="{{getAvatar(post.author)}}" />      
+          </div>
+
+          <div class="userText">
+            <a href="/#/users/{{post.author}}"><span class="username" ng-bind="post.author"></span></a>
+            <span class="customtitle"></span>
+            <div class="badges"></div>
+            <span ng-style="getBannerStyle(post.author)" class="banner wrapped" ng-Class="post.author">
+
+            <span class="sprite">
+            <div class="spriteContainer">
+             <img max-width="32" max-height="32" ng-src="{{getSprite(post.author)}}" / >
+             </div>
+              <span ng-bind="getBannerText(post.author)">
+              </span>
+              </span>
+
+            </span>
+
+            <div class="miscData">
+            Posts: <span ng-bind="getPC(post.author)"></span>
+            </div>
+
+          </div>
+
+        </div>
+     
+
+
+      <div class="postcontent">
+     
+        <span style="white-space: pre-wrap;" ng-hide="editing" ng-bind-html="content"></span>
+ 
+
+        <span ng-show="editing">
+
+
+          <form ng-submit="updateOP()">
+
+            <textarea ng-keyup="autoExpand($event)" ng-model="data.text" id="TextArea"></textarea>
+            <br />
+            <button type="submit">Post</button>
+
+          </form>
+        </span>
+
+
+      </div>
+
+          <div class="signature">
+            temp sig
+          </div>
+
+        <div class="postFooter">
+         
+
+
+          <div class="miscDeets">
+            <span ng-bind="post.date"></span>
+            <a href="" ng-show="hasAuth() && !editingTitle && !editing && !amEditingPost" ng-click="editOP()">Edit</a>
+          </div>
+        </div>
+ </div>
+
+      <div ng-repeat="comment in post.comments">
+
+              
+          
+              <div class="posts">
+
+                <div class="postbit">
+                  <div class="avatar">
+                    
+                    <img width="96" height="96" ng-src="{{getAvatar(comment.author)}}" />                   
+
+                  </div>
+
+                  <div class="userText">
+                    <span class="username"><a href="/#/users/{{comment.author}}" ng-bind="comment.author"></a></span>
+                    <span class="customtitle"></span>
+                    <div class="badges"></div>
+                    <span class="banner wrapped" ng-style="getBannerStyle(comment.author)" ng-Class="comment.author">
+
+                    <span class="sprite">
+                    <div class="spriteContainer">
+                    <img max-width="32" max-height="32" ng-style="spriteStyle" ng-src="{{getSprite(comment.author)}}" / >
+                    </div>
+                      <span ng-bind="getBannerText(comment.author)">
+                         
+
+                      </span>
+                      </span>
+                      
+
+                    </span>
+
+                      <div class="miscData">
+                      Posts: <span ng-bind="getPC(comment.author)"></span>
+                      </div>
+
+
+                  </div>
+
+
+                </div>
+
+                <div class="postcontent">
+                  <span ng-hide="editingPost.which == comment._id" style="white-space: pre-wrap;" ng-bind-html="comment.body"></span>
+                  
+                  
+                  
+                  
+                  
+                  
+                  <span ng-show="editingPost.which == comment._id">
+
+
+                    <form ng-submit="updateComment(comment)">
+                  
+                      <textarea ng-keyup="autoExpand($event)" ng-model="data.text" id="TextAreaPost{{comment._id}}"></textarea>
+                      <br />
+                      <button type="submit">Post</button>
+                      
+                    </form>
+                 </span>
+
+      </div>
+<div class="signature">
+            <span>temp sig</span>
+          </div>
+
+        <div class="postFooter">
+         
+
+
+          <div class="miscDeets">
+            <span ng-bind="comment.date"></span>
+
+            <a href="" ng-show="hasPostAuth(comment.author) && !amEditingPost && !editing && !editingTitle" ng-click="testf(comment)">Edit</a>
+          </div>
+        </div>
+ </div>
+
+                
+
+          
+
+            
+            
+            
+            
+
+            
+            
+            
+          </div>
+        </div>
+        
+        <form ng-submit="addComment()" ng-show="isLoggedIn()" style="margin-top:30px;">
+          <h3>Reply</h3>
+          
+          <textarea ng-keyup="autoExpand($event)" ng-model="body" cols="40" rows="10"></textarea>
+          <br />
+          <button type="submit">Post</button>
+        </form>
+
+        </script>
+        <script type="text/ng-template" id="/register.html">
+            <div class="page-header">
+              <h1>OCAPPA Forums</h1>
+            </div>
+            
+            <div ng-show="error" class="alert alert-danger row">
+              <span>{{ error.message }}</span>
+            </div>
+            
+            <form ng-submit="register()"
+              style="margin-top:30px;">
+              <h3>Register</h3>
+            
+              <div class="form-group">
+                <input type="text"
+                class="form-control"
+                placeholder="Username"
+                ng-model="user.username"></input>
+              </div>
+              <div class="form-group">
+                <input type="password"
+                class="form-control"
+                placeholder="Password"
+                ng-model="user.password"></input>
+              </div>
+              <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </script>
+        <script type="text/ng-template" id="/login.html">
+            <div class="page-header">
+              <h1>OCAPPA Forums</h1>
+            </div>
+            
+            <div ng-show="error" class="alert alert-danger row">
+              <span>{{ error.message }}</span>
+            </div>
+            
+            <form ng-submit="logIn()"
+              style="margin-top:30px;">
+              <h3>Log In</h3>
+            
+              <div class="form-group">
+                <input type="text"
+                class="form-control"
+                placeholder="Username"
+                ng-model="user.username"></input>
+              </div>
+              <div class="form-group">
+                <input type="password"
+                class="form-control"
+                placeholder="Password"
+                ng-model="user.password"></input>
+              </div>
+              <button type="submit" class="btn btn-primary">Log In</button>
+            </form>
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-aria.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-sanitize.min.js"></script>
+        
+        <script src="/javascripts/bootstrap-colorpicker-module.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.3/angular-material.min.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <script src="/javascripts/angularApp.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.3/angular-material.min.css">
+        
+        <link rel="stylesheet" type="text/css" href="/stylesheets/colorpicker.min.css"></link>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/style.css"></link>
+
+    </body>
+</html>
