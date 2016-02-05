@@ -394,6 +394,8 @@ app.controller("MembCtrl",
         var avatar = $scope.avatar;
         var about = $scope.about;
 
+
+
         if (bannerText.length > 16)
         {
           alert("16 chars or fewer. " + (bannerText.length - 16) + " chars over.");
@@ -401,20 +403,56 @@ app.controller("MembCtrl",
         else
         {
         //alert(textCol);
-        members.updateUserInfo( 
-        {
-          user: post.username,
-          bannerText: bannerText,
-          textCol: textCol,
-          bannerBack: bannerBack,
-          hoverText: hoverText,
-          sprite: sprite,
-          avatar: avatar,
-          about: about,
-        }).success(function()
-        {
 
-        });
+        var img = new Image();
+        img.onload = function()
+        {
+          if (this.width > 32 || this.height > 32)
+          {
+            alert("Please sprite max size 32 x 32");   
+          }
+          else
+          {
+
+            var av = new Image();
+            av.onload = function()
+            {
+
+
+              if (this.width > 100 || this.height > 100)
+              {
+                alert("Please avatar max size 100 x 100");
+              }
+              else
+              {
+
+
+                members.updateUserInfo( 
+                {
+                  user: post.username,
+                  bannerText: bannerText,
+                  textCol: textCol,
+                  bannerBack: bannerBack,
+                  hoverText: hoverText,
+                  sprite: sprite,
+                  avatar: avatar,
+                  about: about,
+                }).success(function()
+                {
+
+                });
+              }
+            }
+            av.src = $scope.avatar;
+          }
+
+
+        }
+        img.src = $scope.sprite;
+
+
+
+
       }
     }
 
