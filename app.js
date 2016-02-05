@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-require("./env.js");
+//require("./env.js");
 
 var dbuser = process.env.USER;
 var dbpass = process.env.PASS;
