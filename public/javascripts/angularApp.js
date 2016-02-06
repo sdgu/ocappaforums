@@ -300,8 +300,16 @@ function dateParse(date, tzone)
   var year = "" + date.getUTCFullYear();
   var month = date.getUTCMonth() + 1;
   month = "" + month;
-  var day = "" + date.getUTCDate();
+  var day = date.getUTCDate();
   var hour = date.getUTCHours();
+
+
+  if (hour - hourDiff < 0)
+  {
+    day = day - 1;
+  }
+  day = day + "";
+
   hour = ((hour - 5) % 24 + 24) % 24;
   //alert(hour);
   hour = "" + hour;
